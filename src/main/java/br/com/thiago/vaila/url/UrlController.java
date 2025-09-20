@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.thiago.vaila.dto.url.UrlDTO;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +26,9 @@ public class UrlController {
 
     @GetMapping("/{hash}")
     public ResponseEntity<Void> redirectByHash(@PathVariable String hash) {
-        mUrlService.redirectByHash(hash);
-        return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT.value()).build();
+        return ResponseEntity.status(HttpStatus.PERMANENT_REDIRECT.value())
+            .location(URI.create(mUrlService.resolveOriginalUrl(hash)))
+            .build();
     }
 
     @PostMapping

@@ -1,6 +1,7 @@
 package br.com.thiago.vaila.url;
 
 import br.com.thiago.vaila.dto.url.UrlDTO;
+import jakarta.persistence.EntityNotFoundException;
 
 /**
  * UrlService for communication between controller and repository.
@@ -8,12 +9,14 @@ import br.com.thiago.vaila.dto.url.UrlDTO;
  */
 public interface UrlService {
     /**
-     * Method for redirecting short URL to the original URL based on the generated
-     * short URL hash, if it exists.
+     * Method for resolving the hash into the original URL.
+     * Returns the original URL, if it exists, throws a EntityNotFoundException otherwise.
      * 
      * @param hash Generated short URL hash
+     * @return original URL, found by the specified hash
+     * @throws EntityNotFoundException if the URL with the specified hash is not found
      */
-    public void redirectByHash(String hash);
+    public String resolveOriginalUrl(String hash) throws EntityNotFoundException;
 
     /**
      * Method for creating a short URL, based on the original URL, if it's valid.
