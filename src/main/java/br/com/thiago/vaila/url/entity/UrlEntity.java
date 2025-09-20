@@ -24,7 +24,4 @@ public class UrlEntity {
 
     @Column(unique = true, nullable = false, length = 500)
     private String originalUrl;
-
-    @Column(unique = true)
-    private String customPath;
 }
