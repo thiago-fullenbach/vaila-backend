@@ -1,9 +1,9 @@
 package br.com.thiago.vaila.url;
 
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.thiago.vaila.dto.url.UrlDTO;
+import jakarta.validation.Valid;
 
 import java.net.URI;
 
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/url")
 public class UrlController {
     @Autowired
     private UrlService mUrlService;
@@ -31,18 +30,18 @@ public class UrlController {
             .build();
     }
 
-    @PostMapping
-    public ResponseEntity<UrlDTO> createUrl(@RequestBody UrlDTO urlDTO) {
+    @PostMapping("/url")
+    public ResponseEntity<UrlDTO> createUrl(@Valid @RequestBody UrlDTO urlDTO) {
         return ResponseEntity.ok(mUrlService.createUrl(urlDTO));
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/url/{id}")
     public ResponseEntity<Void> deleteUrlById(@PathVariable Long id) {
         mUrlService.deleteUrlById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{hash}")
+    @DeleteMapping("/url/{hash}")
     public ResponseEntity<Void> deleteUrlById(@PathVariable String hash) {
         mUrlService.deleteUrlByHash(hash);
         return ResponseEntity.noContent().build();

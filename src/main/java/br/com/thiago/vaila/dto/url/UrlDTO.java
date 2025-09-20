@@ -19,7 +19,7 @@ public class UrlDTO {
 
     @URL(message = "Invalid URL")
     @NotNull(message = "The original URL must not be null")
-    @NotBlank(message = "The original URL must not be black")
+    @NotBlank(message = "The original URL must not be blank")
     @JsonProperty(required = true)
     private String originalUrl;
 }

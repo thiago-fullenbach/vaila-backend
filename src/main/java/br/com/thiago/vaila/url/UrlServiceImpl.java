@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.thiago.vaila.dto.url.UrlDTO;
+import br.com.thiago.vaila.dto.url.mapper.UrlMapper;
 import br.com.thiago.vaila.url.entity.UrlEntity;
 import br.com.thiago.vaila.util.Base62ConversionUtil;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,6 +15,9 @@ import lombok.extern.log4j.Log4j2;
 public class UrlServiceImpl implements UrlService {
     @Autowired
     private UrlRepository mUrlRepository;
+
+    @Autowired
+    private UrlMapper mUrlMapper;
 
     @Override
     public String resolveOriginalUrl(String hash) throws EntityNotFoundException {
@@ -27,8 +31,9 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public UrlDTO createUrl(UrlDTO urlDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createUrl'");
+        log.debug("Called UrlService.createUrl(" + urlDTO + ")");
+        UrlEntity savedUrlEntity = mUrlRepository.saveAndFlush(mUrlMapper.urlDTOToUrlEntity(urlDTO));
+        return mUrlMapper.urlEntityToUrlDTO(savedUrlEntity);
     }
 
     @Override
