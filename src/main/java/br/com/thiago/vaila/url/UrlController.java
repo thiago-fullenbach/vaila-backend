@@ -35,12 +35,6 @@ public class UrlController {
         return ResponseEntity.ok(mUrlService.createUrl(urlDTO));
     }
     
-    @DeleteMapping("/url/{id}")
-    public ResponseEntity<Void> deleteUrlById(@PathVariable Long id) {
-        mUrlService.deleteUrlById(id);
-        return ResponseEntity.noContent().build();
-    }
-
     @DeleteMapping("/url/{hash}")
     public ResponseEntity<Void> deleteUrlById(@PathVariable String hash) {
         mUrlService.deleteUrlByHash(hash);

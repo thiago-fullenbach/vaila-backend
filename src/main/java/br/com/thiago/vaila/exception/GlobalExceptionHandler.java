@@ -28,6 +28,17 @@ public class GlobalExceptionHandler {
             ));
     }
 
+    @ExceptionHandler({ IllegalArgumentException.class })
+    public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException illegalArgumentException) {
+        log.error(illegalArgumentException.getMessage(), illegalArgumentException);
+        return ResponseEntity
+            .badRequest()
+            .body(Map.of(
+                "message", illegalArgumentException.getMessage(),
+                "timestamp", Instant.now().toString()
+            ));
+    }
+
     @ExceptionHandler({ MethodArgumentNotValidException.class })
     public ResponseEntity<Map<String, Object>> handleArgumentNotValid(MethodArgumentNotValidException methodArgumentNotValidException) {
         log.error(methodArgumentNotValidException.getMessage(), methodArgumentNotValidException);

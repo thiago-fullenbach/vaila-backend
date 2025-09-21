@@ -27,16 +27,9 @@ public interface UrlService {
     public UrlDTO createUrl(UrlDTO urlDTO);
 
     /**
-     * Method for deleting a short URL by id, if it exists.
-     * 
-     * @param id short URL id
-     */
-    public void deleteUrlById(Long id);
-
-    /**
      * Method for deleting a short URL by hash, if it exists.
      * 
-     * @param hash
+     * @param hash short URL hash
      */
     public void deleteUrlByHash(String hash);
 }
