@@ -1,10 +1,14 @@
 package br.com.thiago.vaila.url;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.thiago.vaila.components.BaseUrlResolver;
 import br.com.thiago.vaila.dto.url.UrlDTO;
+import br.com.thiago.vaila.dto.url.UrlPageDTO;
 import br.com.thiago.vaila.dto.url.mapper.UrlMapper;
 import br.com.thiago.vaila.url.entity.UrlEntity;
 import br.com.thiago.vaila.util.Base62ConversionUtil;
@@ -31,6 +35,17 @@ public class UrlServiceImpl implements UrlService {
             .orElseThrow(() -> new EntityNotFoundException("URL not found for specified hash"));
         log.info(hash + " resolved for " + url.getOriginalUrl());
         return url.getOriginalUrl();
+    }
+
+    @Override
+    public UrlPageDTO readUrls(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<UrlEntity> urlPages = mUrlRepository.findAll(pageable);
+        return new UrlPageDTO(
+            urlPages.getContent().stream().map(entity -> mUrlMapper.urlEntityToUrlDTO(entity, mBaserUrlResolver.getBaseUrl())).toList(), 
+            urlPages.getNumber(), 
+            urlPages.getTotalPages(), 
+            urlPages.getTotalElements());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package br.com.thiago.vaila.url;
 
 import br.com.thiago.vaila.dto.url.UrlDTO;
+import br.com.thiago.vaila.dto.url.UrlPageDTO;
 import jakarta.persistence.EntityNotFoundException;
 
 /**
@@ -17,6 +18,15 @@ public interface UrlService {
      * @throws EntityNotFoundException if the URL with the specified hash is not found
      */
     public String resolveOriginalUrl(String hash) throws EntityNotFoundException;
+
+    /**
+     * Method for listing saved URLs in pages.
+     * 
+     * @param page page number
+     * @param size elements by page
+     * @return a page of URL Data Transfer Objects
+     */
+    public UrlPageDTO readUrls(int page, int size);
 
     /**
      * Method for creating a short URL, based on the original URL, if it's valid.
