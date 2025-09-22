@@ -16,9 +16,6 @@ public interface UrlMapper {
     UrlDTO urlEntityToUrlDTO(UrlEntity urlEntity, @Context String baseUrl);
 
     @Mapping(target = "id", source = "hash", qualifiedByName = "hashToId")
-    @Mapping(target = "withId", ignore = true)
-    @Mapping(target = "withOriginalUrl", ignore = true)
-    @Mapping(target = "withDateCreated", ignore = true)
     UrlEntity urlDTOToUrlEntity(UrlDTO urlDTO);
 
     @Named("hashToId")

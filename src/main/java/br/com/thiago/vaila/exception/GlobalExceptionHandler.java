@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.extern.log4j.Log4j2;
+import jakarta.validation.ConstraintViolationException;
 
-@Log4j2
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler({ EntityNotFoundException.class })
     public ResponseEntity<Map<String, String>> handleEntityNotFound(EntityNotFoundException entityNotFoundException) {
-        log.error(entityNotFoundException.getMessage(), entityNotFoundException);
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
             .body(Map.of(
@@ -28,20 +26,18 @@ public class GlobalExceptionHandler {
             ));
     }
 
-    @ExceptionHandler({ IllegalArgumentException.class })
-    public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException illegalArgumentException) {
-        log.error(illegalArgumentException.getMessage(), illegalArgumentException);
+    @ExceptionHandler({ ConstraintViolationException.class, IllegalArgumentException.class })
+    public ResponseEntity<Map<String, Object>> handleIllegalArgument(Exception exception) {
         return ResponseEntity
             .badRequest()
             .body(Map.of(
-                "message", illegalArgumentException.getMessage(),
+                "message", exception.getMessage(),
                 "timestamp", Instant.now().toString()
             ));
     }
 
     @ExceptionHandler({ MethodArgumentNotValidException.class })
     public ResponseEntity<Map<String, Object>> handleArgumentNotValid(MethodArgumentNotValidException methodArgumentNotValidException) {
-        log.error(methodArgumentNotValidException.getMessage(), methodArgumentNotValidException);
         Map<String, String> fieldErrors = methodArgumentNotValidException
             .getBindingResult()
             .getFieldErrors()
@@ -60,7 +56,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleUnhandledException(Exception exception) {
-        log.error(exception.getMessage(), exception);
         return ResponseEntity
             .internalServerError()
             .body(Map.of(

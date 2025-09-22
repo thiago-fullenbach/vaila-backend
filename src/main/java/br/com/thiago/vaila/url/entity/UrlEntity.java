@@ -12,12 +12,10 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.With;
 
 @Entity
 @Table
 @Data
-@With
 @NoArgsConstructor
 @AllArgsConstructor
 public class UrlEntity {
