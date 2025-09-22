@@ -6,7 +6,6 @@ import br.com.thiago.vaila.dto.url.UrlDTO;
 import br.com.thiago.vaila.dto.url.UrlPageDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 
 import java.net.URI;
 
@@ -36,8 +35,8 @@ public class UrlController {
 
     @GetMapping("/url")
     public ResponseEntity<UrlPageDTO> readUrls(
-            @RequestParam(defaultValue = "0") @Positive int page, 
-            @RequestParam(defaultValue = "10") @Positive int size) {
+            @RequestParam(defaultValue = "0") int page, 
+            @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok(mUrlService.readUrls(page, size));
     }
     
