@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.thiago.vaila.components.BaseUrlResolver;
+import br.com.thiago.vaila.component.BaseUrlResolver;
 import br.com.thiago.vaila.dto.url.UrlDTO;
 import br.com.thiago.vaila.dto.url.UrlPageDTO;
 import br.com.thiago.vaila.dto.url.mapper.UrlMapper;

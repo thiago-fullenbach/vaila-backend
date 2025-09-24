@@ -43,7 +43,9 @@ public class UrlController {
 
     @PostMapping("/url")
     public ResponseEntity<UrlDTO> createUrl(@RequestBody @Valid UrlDTO urlDTO) {
-        return ResponseEntity.ok(mUrlService.createUrl(urlDTO));
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(mUrlService.createUrl(urlDTO));
     }
     
     @DeleteMapping("/url/{hash}")

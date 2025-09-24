@@ -1,4 +1,4 @@
-package br.com.thiago.vaila.components;
+package br.com.thiago.vaila.component;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
